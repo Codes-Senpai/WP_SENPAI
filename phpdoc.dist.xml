@@ -8,9 +8,9 @@
     <paths>
         <output>/var/www/doc</output>
     </paths>
-    <version number="3.0.0">
+    <version number="latest">
         <api>
-            <source dsn=".">
+            <source dsn="./app/Utils/">
                 <path>app</path>
             </source>
         </api>
