@@ -60,7 +60,9 @@ class JSON {
 		return false;
     }
     
-
+    /**
+     * @param string $argument1 This is the description.
+     */
     public function get_all(){
 		if(is_array($this->options)){
 				return $this->options;
@@ -93,7 +95,10 @@ class JSON {
 			return false;
 		}
 	}
- 
+    
+    /**
+     * @param string $argument1 This is the description.
+     */
 	public function save(){
 		if($this->is_site_option){
 			update_site_option($this->option_name, json_encode($this->options));
