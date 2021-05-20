@@ -10,8 +10,10 @@
         <output>/var/www/doc/json</output>
     </paths>
     <version number="latest">
-            <source dsn="./app/Utils/">
+        <api> 
+            <source dsn="file:/app/Utils/">
                 <path>JSON.php</path>
             </source>
+        </api>
     </version>
 </phpdocumentor>
