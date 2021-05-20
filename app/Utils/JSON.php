@@ -1,5 +1,6 @@
 <?php
 namespace WP_SENPAI\Utils;
+
 class JSON {
 	var $options;
 	var $option_name;
@@ -69,7 +70,10 @@ class JSON {
 		}
 		return false;
 	}
- 
+    /**
+     * This is a DocBlock.
+     * @return void
+     */
 	public function set($key, $value){
 		if(is_array($this->options)){
 			$this->options[$key] = $value;
