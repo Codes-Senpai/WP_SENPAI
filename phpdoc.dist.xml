@@ -5,14 +5,13 @@
         xmlns="https://www.phpdoc.org"
         xsi:noNamespaceSchemaLocation="https://docs.phpdoc.org/latest/phpdoc.xsd"
 >
+<title>SenpaiCodes JSON Doc</title>
     <paths>
-        <output>/var/www/doc</output>
+        <output>/var/www/doc/json</output>
     </paths>
     <version number="latest">
-        <api>
             <source dsn="./app/Utils/">
-                <path>app</path>
+                <path>JSON.php</path>
             </source>
-        </api>
     </version>
 </phpdocumentor>

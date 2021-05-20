@@ -95,9 +95,10 @@ class JSON {
 			return false;
 		}
 	}
-    
+
     /**
      * @param string $argument1 This is the description.
+     * @return void
      */
 	public function save(){
 		if($this->is_site_option){
