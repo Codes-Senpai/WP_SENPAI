@@ -11,7 +11,7 @@
     </paths>
     <version number="latest">
         <api> 
-            <source dsn="file:/app/Utils/">
+            <source dsn="/app/Utils/">
                 <path>JSON.php</path>
             </source>
         </api>
