@@ -1,12 +1,24 @@
 <?php
 namespace WP_SENPAI\Utils;
+
+if ( !defined( 'WPINC' ) ) {die();}
+    /**
+	 * @category Class
+	 * @author amine safsafi
+	 */
 class JSON {
 	var $options;
 	var $option_name;
     var $is_site_option;
     
-    //if ( !defined( 'WPINC' ) ) {die();}
-
+    
+	/**
+	 * @param string $option_name
+	 * @param boolean $is_site_options
+	 * @example $senpai_option = \WP_SENPAI\Utils\JSON('senpai_option');
+	 * @author amine safsafi
+	 * @return void
+	 */
 	public function __construct($option_name, $is_site_options = false){
 		$this->option_name = $option_name;
 		$this->is_site_option = $is_site_options;
@@ -28,7 +40,9 @@ class JSON {
 			}
 		}
 	}
- 
+	/**
+	 * @ignore
+	 */
     public function remove($key){
         if(is_array($this->options)){
             if(isset($this->options[$key])){
@@ -44,7 +58,11 @@ class JSON {
         return false;
     }
 
-
+	/**
+	 * @param string $key 
+	 * @example $site_title = $senpai_option->get('site_title');
+	 * @author amine safsafi
+	 */
     public function get($key){
 		if(is_array($this->options)){
 			if(isset($this->options[$key])){
@@ -58,8 +76,11 @@ class JSON {
 
 		return false;
     }
-    
-
+		
+	/**
+	 * @example $senpai_all = $senpai_option->get_all();
+	 * @author amine safsafi
+	 */	
     public function get_all(){
 		if(is_array($this->options)){
 				return $this->options;
@@ -70,6 +91,12 @@ class JSON {
 		return false;
 	}
  
+	/**
+	 * @param string $key
+	 * @param string $value
+	 * @example $senpai_option->set('site_title','SENPAI WEBSITE');
+	 * @author amine safsafi
+	 */
 	public function set($key, $value){
 		if(is_array($this->options)){
 			$this->options[$key] = $value;
@@ -79,7 +106,9 @@ class JSON {
 			// Do nothing
 		}
 	}
- 
+ 	/**
+	 * @ignore
+	 */
 	function __isset($key){
 		if(is_array($this->options)){
 			return array_key_exists($key, $this->options);
@@ -90,6 +119,11 @@ class JSON {
 		}
 	}
  
+	/**
+	 * 
+	 * @example $senpai_option->save();
+	 * @author amine safsafi
+	 */
 	public function save(){
 		if($this->is_site_option){
 			update_site_option($this->option_name, json_encode($this->options));
@@ -97,7 +131,10 @@ class JSON {
 			update_option($this->option_name, json_encode($this->options));
 		}
     }
-    
+    /**
+	 * @example $senpai_option->reset();
+	 * @author amine safsafi
+	 */
 	public function reset(){
 		if($this->is_site_option){
 			delete_option($this->option_name);
