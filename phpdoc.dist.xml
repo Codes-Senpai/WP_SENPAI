@@ -13,7 +13,7 @@
         <api> 
             <source dsn="./app/">
                 <path>Utils/JSON.php</path>
-                <path>tests/test.php</path>
+                <path>Utils/DB.php</path>
             </source>
 
         </api>

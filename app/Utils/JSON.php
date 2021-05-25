@@ -3,6 +3,7 @@ namespace WP_SENPAI\Utils;
 
 if ( !defined( 'WPINC' ) ) {die();}
     /**
+	 * JSON helper class its used to speedup interact with WordPress default options.
 	 * @category Class
 	 * @author amine safsafi
 	 */
@@ -22,6 +23,7 @@ class JSON {
     
     
 	/**
+	 * $senpai_option = \WP_SENPAI\Utils\JSON('senpai_option');
 	 * @param string $option_name
 	 * @param boolean $is_site_options
 	 * @author amine safsafi
@@ -49,7 +51,8 @@ class JSON {
 		}
 	}
 	/**
-	 * @ignore
+	 * $senpai_option->remove('site_title');
+	 * @param string $key
 	 * @return boolean
 	 */
     public function remove($key){
@@ -68,6 +71,7 @@ class JSON {
     }
 
 	/**
+	 * $local_var = $senpai_option->get('site_title');
 	 * @param string $key 
 	 * @return string
 	 * @author amine safsafi
@@ -87,7 +91,9 @@ class JSON {
     }
 		
 	/**
+	 * $local_arr = $senpai_option->get_all();
 	 * @return array
+	 * 
 	 * @author amine safsafi
 	 */	
     public function get_all(){
@@ -101,6 +107,7 @@ class JSON {
 	}
  
 	/**
+	 * $senpai_option->set('site_title','SENPAI WEBSITE');
 	 * @param string $key required
 	 * @param string $value
 	 * @author amine safsafi
@@ -129,7 +136,8 @@ class JSON {
 	}
  
 	/**
-	 * 
+	 * run after insert/update options value to save into DB
+	 * $senpai_option->save();
 	 * @return void
 	 * @author amine safsafi
 	 */
@@ -141,6 +149,7 @@ class JSON {
 		}
     }
     /**
+	 * $senpai_option->reset();
 	 * @author amine safsafi
 	 * @return void
 	 */
