@@ -7,15 +7,23 @@ if ( !defined( 'WPINC' ) ) {die();}
 	 * @author amine safsafi
 	 */
 class JSON {
+	/**
+	 * @ignore
+	 */
 	var $options;
+	/**
+	 * @ignore
+	 */
 	var $option_name;
+	/**
+	 * @ignore
+	 */
     var $is_site_option;
     
     
 	/**
 	 * @param string $option_name
 	 * @param boolean $is_site_options
-	 * @example $senpai_option = \WP_SENPAI\Utils\JSON('senpai_option');
 	 * @author amine safsafi
 	 * @return void
 	 */
@@ -42,6 +50,7 @@ class JSON {
 	}
 	/**
 	 * @ignore
+	 * @return boolean
 	 */
     public function remove($key){
         if(is_array($this->options)){
@@ -60,7 +69,7 @@ class JSON {
 
 	/**
 	 * @param string $key 
-	 * @example $site_title = $senpai_option->get('site_title');
+	 * @return string
 	 * @author amine safsafi
 	 */
     public function get($key){
@@ -78,7 +87,7 @@ class JSON {
     }
 		
 	/**
-	 * @example $senpai_all = $senpai_option->get_all();
+	 * @return array
 	 * @author amine safsafi
 	 */	
     public function get_all(){
@@ -92,10 +101,10 @@ class JSON {
 	}
  
 	/**
-	 * @param string $key
+	 * @param string $key required
 	 * @param string $value
-	 * @example $senpai_option->set('site_title','SENPAI WEBSITE');
 	 * @author amine safsafi
+	 * @return void
 	 */
 	public function set($key, $value){
 		if(is_array($this->options)){
@@ -121,7 +130,7 @@ class JSON {
  
 	/**
 	 * 
-	 * @example $senpai_option->save();
+	 * @return void
 	 * @author amine safsafi
 	 */
 	public function save(){
@@ -132,8 +141,8 @@ class JSON {
 		}
     }
     /**
-	 * @example $senpai_option->reset();
 	 * @author amine safsafi
+	 * @return void
 	 */
 	public function reset(){
 		if($this->is_site_option){
