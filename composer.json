@@ -14,5 +14,8 @@
         "psr-4": {
             "WP_SENPAI\\": "app/"
         }
+    },
+    "support": {
+        "docs": "https://doc.senpai.codes/json/"
     }
 }
