@@ -1,7 +1,7 @@
 <?php
 namespace WP_SENPAI\Utils;
 
-if ( !defined( 'WPINC' ) ) {die();}
+//if ( !defined( 'WPINC' ) ) {die();}
 
     /**
 	 * DB_INIT helper class it's used to speedup interact with WordPress DataBase while activate/deactivate theme or plugin.
