@@ -9,8 +9,6 @@ if ( !defined( 'WPINC' ) ) {die();}
 	 * @author amine safsafi
 	 */
 
-require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
-
 class DB_INIT {
 	/**
 	 * @ignore
