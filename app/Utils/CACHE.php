@@ -9,8 +9,12 @@ if ( !defined( 'WPINC' ) ) {die();}
 	 */
 class CACHE {
 
-    public function __construct($prefix){
-        
+    public function __construct(){
+       //store a value in cache
+		//wp_cache_set( 'unique_key', $data );
+
+		//retrieve value from cache
+		//$data = wp_cache_get( 'unqiue_key' ); 
     }
 
 }
