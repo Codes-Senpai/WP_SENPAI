@@ -98,7 +98,7 @@ class DB {
 	}
 
 	/**
-	 * $last_id = $senpai_db->update(table_name, data, id);
+	 * $senpai_db->update(table_name, data, id);
 	 * @param string $table_name
 	 * @param array $data
 	 * @param array $id
