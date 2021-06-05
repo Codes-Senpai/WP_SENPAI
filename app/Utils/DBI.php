@@ -2,15 +2,13 @@
 namespace WP_SENPAI\Utils;
 
 if ( !defined( 'WPINC' ) ) {die();}
+require_once ABSPATH . 'wp-admin/includes/upgrade.php';
 
     /**
 	 * DBI helper class it's used to speedup interact with WordPress DataBase while activate/deactivate theme or plugin.
 	 * @category Class
 	 * @author amine safsafi
 	 */
-
-require_once ABSPATH . 'wp-admin/includes/upgrade.php';
-
 class DBI {
 	/**
 	 * @ignore

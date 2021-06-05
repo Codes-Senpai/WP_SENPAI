@@ -7,7 +7,7 @@
 >
 <title>SenpaiCodes Doc</title>
     <paths>
-        <output>/var/www/doc/Utils</output>
+        <output>/var/www/doc/wp_senpai</output>
     </paths>
     <version number="latest">
         <api> 
