@@ -9,6 +9,8 @@ if ( !defined( 'WPINC' ) ) {die();}
 	 * @author amine safsafi
 	 */
 
+require_once ABSPATH . 'wp-admin/includes/upgrade.php';
+
 class DBI {
 	/**
 	 * @ignore
@@ -39,7 +41,7 @@ class DBI {
 
     public function create_table($table_name,$colums_sql){
         $table = $this->senpai_prefix . $table_name;
-        $charset = $this->senpai_charset
+        $charset = $this->senpai_charset;
         $sql = "CREATE TABLE $table ($colums_sql) $charset;";
         maybe_create_table( $table, $sql );
     }
