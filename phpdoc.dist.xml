@@ -7,12 +7,13 @@
 >
 <title>SenpaiCodes Doc</title>
     <paths>
-        <output>/var/www/doc/json</output>
+        <output>/var/www/doc/Utils</output>
     </paths>
     <version number="latest">
         <api> 
             <source dsn="./app/">
                 <path>Utils/JSON.php</path>
+                <path>Utils/DBI.php</path>
                 <path>Utils/DB.php</path>
             </source>
 
