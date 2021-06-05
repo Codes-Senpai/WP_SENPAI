@@ -60,7 +60,7 @@ class DB {
 	 */
     public function get_val($table_name,$column_name,$id){
 		$table = $this->senpai_prefix . $table_name;
-		return $this->senpai_db->get_var( $this->senpai_db->prepare("SELECT %s FROM %s WHERE id=%s",array($column_name,$table,$id)));
+		return $this->senpai_db->get_var( $this->senpai_db->prepare("SELECT %s FROM %s WHERE id = %s",array($column_name,$table,$id)));
 	}
 
 	/**
