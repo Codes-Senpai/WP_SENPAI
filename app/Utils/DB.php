@@ -48,7 +48,7 @@ class DB {
 	 */
     public function get_all($table_name){
 		$table = $this->senpai_prefix . $table_name;
-		return $this->senpai_db->get_results( "SELECT * FROM $table_name" );
+		return $this->senpai_db->get_results( "SELECT * FROM $table" );
 	}
 
 	/**
