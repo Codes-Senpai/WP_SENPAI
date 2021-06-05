@@ -109,4 +109,26 @@ class DB {
 		$this->senpai_db->update( $table, $data, array( 'id' => $id ));
 	}
 
+	/**
+	 * $senpai_db->delete(table_name, target_column, value);
+	 * @param string $table_name
+	 * @param string $target_column
+	 * @param string $value
+	 * @return void
+	 */
+    public function delete($table_name,$target_column,$value){
+		$table = $this->senpai_prefix . $table_name;
+		$this->senpai_db->delete( $table, array( $target_column => $value ));
+	}
+
+	/**
+	 * $senpai_db->reset(table_name);
+	 * @param string $table_name
+	 * @return void
+	 */
+    public function reset($table_name){
+		$table = $this->senpai_prefix . $table_name;
+		$this->senpai_db->query("TRUNCATE TABLE $table");
+	}
+
 }
