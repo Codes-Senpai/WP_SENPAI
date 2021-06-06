@@ -15,6 +15,7 @@ class Logger {
 
 	/**
 	 * $logger = new \WP_SENPAI\Debug\Logger();
+	 * for the $base variable only URL valid characters allowed
 	 * @param string $base
 	 * @author amine safsafi
 	 * @return void
@@ -43,7 +44,7 @@ class Logger {
 	}
 	/**
 	 * Append variable to log file
-	 * $logger->log();
+	 * $logger->log('test');
 	 * @param mixed $log_msg
 	 * @author amine safsafi
 	 * @return void
@@ -68,7 +69,7 @@ class Logger {
             'Senpai Logs', // page_title
             'Senpai Logs ['.$this->senpai_base.']', // menu_title
             'manage_options', // capability
-            'senpai_logs_viewer', // menu_slug
+            'senpai_logs_viewer'.$this->senpai_base, // menu_slug
             [ $this, 'logs_page_render'], // function
         );
     }
@@ -94,11 +95,11 @@ class Logger {
 		$now = current_time( 'mysql' );
 		$page_folder = $this->senpai_base;
 		$HTML = "<div class='wrap'>";
-		$HTML .= "<div style='display:flex;align-items: center;justify-content:space-between;background: white;'><h1>$page_folder</h1><h1>server-time: $now</h1></div>";
+		$HTML .= "<div style='padding:1rem;display:flex;align-items: center;justify-content:space-between;background: white;'><h1>$page_folder</h1><h1>server-time: $now</h1></div>";
 		foreach ($logs_contents as $key => $value){
 			$title = $value['title'];
 			$content = $value['content'];
-			$HTML .= "<h1>$title</h1>";
+			$HTML .= "<h1 style='padding:1rem;'>$title</h1>";
 			$HTML .= "<br><div style='max-height:300px;overflow:scroll;background-color:white'>$content</div><br>";
 		}
 		$HTML .= "</div><div class='clear'></div>";
