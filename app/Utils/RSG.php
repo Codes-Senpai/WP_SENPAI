@@ -38,9 +38,9 @@ class RSG {
     }
 
 	/**
-     * $customAlphabet = '0123456789abcdefjhigklmnopqrstuvwxyz';\n
-     * $generator = new \WP_SENPAI\Utils\RSG($customAlphabet);/n
-     * $generator->setAlphabet($customAlphabet);\n
+     * @example $customAlphabet = '0123456789abcdefjhigklmnopqrstuvwxyz';
+     * @example $generator = new \WP_SENPAI\Utils\RSG($customAlphabet);
+     * @example $generator->setAlphabet($customAlphabet);
 	 * @param string $alphabet
 	 * @author amine safsafi
 	 * @return void
