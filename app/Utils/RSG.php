@@ -4,7 +4,16 @@ namespace WP_SENPAI\Utils;
 if ( !defined( 'WPINC' ) ) {die();}
     /**
 	 * Random String Generator helper class it's used to speedup fetch random strings and integers.
-	 * @category Class
+	 * 
+     * ```
+     * $generator = new \WP_SENPAI\Utils\RSG();
+     * $customAlphabet = '0123456789';
+     * $generator->setAlphabet($customAlphabet);
+     * $s = $generator->generate(15);
+     * $i = $generator->getRandomInteger(1,100);
+     * ```
+     * 
+     * @category Class
 	 * @author amine safsafi
 	 */
 class RSG {
@@ -19,8 +28,13 @@ class RSG {
     protected $alphabetLength;
 
 	/**
+     * 
+     * 
+     * ```
 	 * $generator = new \WP_SENPAI\Utils\RSG();
-	 * @param string $alphabet
+	 * ```
+     * 
+     * @param string $alphabet
 	 * @author amine safsafi
 	 * @return void
 	 */
@@ -46,9 +60,6 @@ class RSG {
      * $generator->setAlphabet($customAlphabet);
      * ```
      * 
-     * *test 1
-     * *test 2
-     * 
 	 * @param string $alphabet
 	 * @author amine safsafi
 	 * @return void
@@ -61,8 +72,12 @@ class RSG {
 
 
     /**
+     * 
+     * ```
      * $s = $generator->generate(15);
-	 * @author amine safsafi
+	 * ```
+     * 
+     * @author amine safsafi
      * @param int $length
      * @return string
 	 */
@@ -79,7 +94,11 @@ class RSG {
     }
 
     /**
+     * 
+     * ```
      * $i = $generator->getRandomInteger(1,100);
+     * ```
+     * 
      * @param int $min
      * @param int $max
      * @return int
