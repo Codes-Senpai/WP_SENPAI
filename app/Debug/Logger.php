@@ -4,6 +4,11 @@ namespace WP_SENPAI\Debug;
 if ( !defined( 'WPINC' ) ) {die();}
     /**
 	 * Logger Class it's used to Log Stuff that can be accesible through dashboard
+	 * 
+	 * 
+	 * 
+	 * @todo add clear functionality
+	 * @todo add admin widget
 	 * @category Class
 	 * @author amine safsafi
 	 */
