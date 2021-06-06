@@ -4,6 +4,9 @@ namespace WP_SENPAI\Utils;
 if ( !defined( 'WPINC' ) ) {die();}
     /**
 	 * Cache helper class it's used to speedup interact with WordPress DB Cache.
+	 * 
+	 * 
+	 * @see https://developer.wordpress.org/reference/functions/wp_cache_set/
 	 * @category Class
 	 * @author amine safsafi
 	 */
