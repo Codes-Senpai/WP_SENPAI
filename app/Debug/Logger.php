@@ -64,8 +64,8 @@ class Logger {
 		}
 		$HTML = "<div class='wrap'>";
 		foreach ($logs_contents as $key => $value){
-			$title .= $value['title'];
-			$content .= $value['content'];
+			$title = $value['title'];
+			$content = $value['content'];
 			$HTML .= "<h1>$title</h1>";
 			$HTML .= "<br><div style='max-height:300px;overflow:scroll;background-color:white'>$content</div><br>";
 		}
