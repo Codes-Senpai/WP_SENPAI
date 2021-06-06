@@ -8,11 +8,21 @@ if ( !defined( 'WPINC' ) ) {die();}
 	 * @author amine safsafi
 	 */
 class Logger {
+	/**
+	 * @ignore
+	 */
+    var $senpai_base;
 
-    public function __construct(){
-		add_action( 'admin_menu', [ $this, 'add_logs_menu' ] );
+	/**
+	 * $logger = new \WP_SENPAI\Debug\Logger();
+	 * @param string $base
+	 * @author amine safsafi
+	 * @return void
+	 */
+    public function __construct($base = 'senpai-log'){
+		$this->senpai_base = $base;
 		$upload_dir   = wp_upload_dir();
-		$log_filename = $upload_dir['basedir'] . "/senpai-log";
+		$log_filename = $upload_dir['basedir'] . "/" . $base;
 		if (!file_exists($log_filename)) 
 		{
 			mkdir($log_filename, 0700, true);
@@ -22,10 +32,26 @@ class Logger {
 		}
     }
 
+	/**
+	 * Display logs under tools page
+	 * $logger->show_admin();
+	 * @author amine safsafi
+	 * @return void
+	 */
+	public function show_admin(){
+		add_action( 'admin_menu', [ $this, 'add_logs_menu' ] );
+	}
+	/**
+	 * Append variable to log file
+	 * $logger->log();
+	 * @param mixed $log_msg
+	 * @author amine safsafi
+	 * @return void
+	 */
 	public function log($log_msg)
 	{
 		$upload_dir   = wp_upload_dir();
-		$log_filename = $upload_dir['basedir'] . "/senpai-log";	
+		$log_filename = $upload_dir['basedir'] . "/" . $this->senpai_base;	
 		$log_file_data = $log_filename.'/log_' . date('d-M-Y') . '.log';
 		$now = current_time( 'mysql' );
 		$seperator = '---------[ ' . $now . ' ]---------';
@@ -33,22 +59,25 @@ class Logger {
 		// if you don't add `FILE_APPEND`, the file will be erased each time you add a log
 		file_put_contents($log_file_data, print_r($log_msg,1) . "\n", FILE_APPEND);
 	}
-
+	/**
+	 * @ignore
+	 */
 	public function add_logs_menu(){
         add_submenu_page(
             'tools.php',
             'Senpai Logs', // page_title
-            'Senpai Logs', // menu_title
+            'Senpai Logs ['.$this->senpai_base.']', // menu_title
             'manage_options', // capability
             'senpai_logs_viewer', // menu_slug
             [ $this, 'logs_page_render'], // function
-            4// position
         );
     }
-
+	/**
+	 * @ignore
+	 */
 	public function logs_page_render(){
 		$upload_dir   = wp_upload_dir();
-		$log_filename = $upload_dir['basedir'] . "/senpai-log";
+		$log_filename = $upload_dir['basedir'] . "/" . $this->senpai_base;
 		$files = scandir($log_filename);
 		$logs_contents = array();
 		foreach ($files as $key => $file) {
@@ -63,8 +92,9 @@ class Logger {
 			}
 		}
 		$now = current_time( 'mysql' );
+		$page_folder = $this->senpai_base;
 		$HTML = "<div class='wrap'>";
-		$HTML .= "<div style='display:flex;align-items: center;justify-content:center;background: white;'><h1>server-time: $now</h1></div>";
+		$HTML .= "<div style='display:flex;align-items: center;justify-content:space-between;background: white;'><h1>$page_folder</h1><h1>server-time: $now</h1></div>";
 		foreach ($logs_contents as $key => $value){
 			$title = $value['title'];
 			$content = $value['content'];
