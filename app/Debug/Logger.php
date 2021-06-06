@@ -69,7 +69,8 @@ class Logger {
 	 */
 	public function destroy() {
 		$upload_dir   = wp_upload_dir();
-		$log_filename = $upload_dir['basedir'] . "/" . $this->senpai_base;
+		$dir = $upload_dir['basedir'] . "/" . $this->senpai_base;
+		$retval = 0; 
 		system('rm -rf -- ' . escapeshellarg($dir), $retval);
 		return $retval == 0; // UNIX commands return zero on success
 	}
