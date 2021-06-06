@@ -64,7 +64,7 @@ class Logger {
 		}
 		$now = current_time( 'mysql' );
 		$HTML = "<div class='wrap'>";
-		$HTML .= "<div style='display:flex;'><h2>server time:$now</h2></div>";
+		$HTML .= "<div style='display:flex;align-items: center;justify-content:center;background: white;'><h1>server-time: $now</h1></div>";
 		foreach ($logs_contents as $key => $value){
 			$title = $value['title'];
 			$content = $value['content'];
