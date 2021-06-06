@@ -28,7 +28,7 @@ class RSG {
     protected $alphabetLength;
 
 	/**
-     * 
+     * RSG Constructor default Alphabet A-Z a-z 0-9 
      * 
      * ```
 	 * $generator = new \WP_SENPAI\Utils\RSG();
@@ -55,8 +55,8 @@ class RSG {
      * Bsic usage example of setAlphabet
      * 
      * ```
+     * $generator = new \WP_SENPAI\Utils\RSG();
      * $customAlphabet = '0123456789abcdefjhigklmnopqrstuvwxyz';
-     * $generator = new \WP_SENPAI\Utils\RSG($customAlphabet);
      * $generator->setAlphabet($customAlphabet);
      * ```
      * 
@@ -72,8 +72,10 @@ class RSG {
 
 
     /**
+     * Get the generated Random String
      * 
      * ```
+     * $generator = new \WP_SENPAI\Utils\RSG();
      * $s = $generator->generate(15);
 	 * ```
      * 
@@ -94,8 +96,10 @@ class RSG {
     }
 
     /**
+     * Get the generated random integer based on pre-determined interval
      * 
      * ```
+     * $generator = new \WP_SENPAI\Utils\RSG();
      * $i = $generator->getRandomInteger(1,100);
      * ```
      * 
