@@ -3,7 +3,7 @@ namespace WP_SENPAI\Utils;
 
 if ( !defined( 'WPINC' ) ) {die();}
     /**
-	 * Cache helper class it's used to speedup interact with WordPress DB Cache.
+	 * Random String Generator helper class it's used to speedup fetch random strings and integers.
 	 * @category Class
 	 * @author amine safsafi
 	 */
