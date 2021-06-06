@@ -70,7 +70,7 @@ class Logger {
 			$HTML .= "<br><div style='max-height:300px;overflow:scroll;background-color:white'>$content</div><br>";
 		}
 		$HTML .= "</div><div class='clear'></div>";
-		return $HTML;
+		echo $HTML;
 	}
 
 }
