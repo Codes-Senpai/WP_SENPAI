@@ -16,6 +16,7 @@
                 <path>Utils/DBI.php</path>
                 <path>Utils/DB.php</path>
                 <path>Utils/CACHE.php</path>
+                <path>Utils/RSG.php</path>
                 <path>Debug/Logger.php</path>
             </source>
 
