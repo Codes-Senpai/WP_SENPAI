@@ -38,12 +38,17 @@ class RSG {
     }
 
 	/**
-     * Bsic usage example
+     * Bsic usage example of setAlphabet
+     * 
      * ```
-     * "$customAlphabet = '0123456789abcdefjhigklmnopqrstuvwxyz';
+     * $customAlphabet = '0123456789abcdefjhigklmnopqrstuvwxyz';
      * $generator = new \WP_SENPAI\Utils\RSG($customAlphabet);
      * $generator->setAlphabet($customAlphabet);
      * ```
+     * 
+     * *test 1
+     * *test 2
+     * 
 	 * @param string $alphabet
 	 * @author amine safsafi
 	 * @return void
