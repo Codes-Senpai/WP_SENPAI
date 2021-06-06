@@ -60,6 +60,19 @@ class Logger {
 		// if you don't add `FILE_APPEND`, the file will be erased each time you add a log
 		file_put_contents($log_file_data, print_r($log_msg,1) . "\n", FILE_APPEND);
 	}
+
+	/**
+	 * Remove Log folder and files within
+	 * $logger->destroy();
+	 * @author amine safsafi
+	 * @return int
+	 */
+	public function destroy() {
+		$upload_dir   = wp_upload_dir();
+		$log_filename = $upload_dir['basedir'] . "/" . $this->senpai_base;
+		system('rm -rf -- ' . escapeshellarg($dir), $retval);
+		return $retval == 0; // UNIX commands return zero on success
+	}
 	/**
 	 * @ignore
 	 */
@@ -67,9 +80,9 @@ class Logger {
         add_submenu_page(
             'tools.php',
             'Senpai Logs', // page_title
-            'Senpai Logs ['.$this->senpai_base.']', // menu_title
+            'SL ['.$this->senpai_base.']', // menu_title
             'manage_options', // capability
-            'senpai_logs_viewer'.$this->senpai_base, // menu_slug
+            'senpai_logs_viewer_'.$this->senpai_base, // menu_slug
             [ $this, 'logs_page_render'], // function
         );
     }
@@ -96,11 +109,15 @@ class Logger {
 		$page_folder = $this->senpai_base;
 		$HTML = "<div class='wrap'>";
 		$HTML .= "<div style='padding:1rem;display:flex;align-items: center;justify-content:space-between;background: white;'><h1>$page_folder</h1><h1>server-time: $now</h1></div>";
-		foreach ($logs_contents as $key => $value){
-			$title = $value['title'];
-			$content = $value['content'];
-			$HTML .= "<h1 style='padding:1rem;'>$title</h1>";
-			$HTML .= "<br><div style='max-height:300px;overflow:scroll;background-color:white'>$content</div><br>";
+		if(count($logs_contents)){
+			foreach ($logs_contents as $key => $value){
+				$title = $value['title'];
+				$content = $value['content'];
+				$HTML .= "<h1 style='padding:1rem;'>$title</h1>";
+				$HTML .= "<br><div style='max-height:300px;overflow:scroll;background-color:white'>$content</div><br>";
+			}
+		}else{
+			$HTML .= "<br><div style='padding:3rem;display:flex;align-items: center;justify-content:center;background: white;'><h1>NO Logs Available.</h1></div><br>";
 		}
 		$HTML .= "</div><div class='clear'></div>";
 		echo $HTML;
