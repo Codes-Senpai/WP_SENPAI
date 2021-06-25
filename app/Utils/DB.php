@@ -3,7 +3,16 @@ namespace WP_SENPAI\Utils;
 
 if ( !defined( 'WPINC' ) ) {die();}
     /**
-	 * DB helper class it's used to speedup interact with WordPress DataBase.
+	 * DB helper class it's used to interact with WordPress DataBase Table.
+	 * 
+	 * ```
+	 * $remote_db = (object)['username'=>'','password'=>'','database_name'=>'','host'=>''];
+	 * $senpai_db = new \WP_SENPAI\Utils\DB('senpai');
+	 * $val = $senpai_db->get_val('senpai_table','senpai_col', id);
+	 * $row = $senpai_db->get_row('senpai_table', id);
+	 * $column = $senpai_db->get_col('senpai_table', 'column_name');
+	 * ```
+	 * 
 	 * @category Class
 	 * @author amine safsafi
 	 */
@@ -22,17 +31,26 @@ class DB {
     var $senpai_remote;
 
 	/**
-	 * $senpai_db = new \WP_SENPAI\Utils\DB(prefix,db_obj);
+	 * Initiate DB connection
+	 * 
+	 * ```
+	 * $remote_db = (object)['username'=>'','password'=>'','database_name'=>'','host'=>''];
+	 * $senpai_db = new \WP_SENPAI\Utils\DB('senpai');
+	 * 
+	 * ```
+	 * 
 	 * @param string $prefix
-	 * @param object $db
+	 * @param object $db {username,password,database_name,host}
 	 * @author amine safsafi
 	 * @return void
 	 */
-    public function __construct($prefix,$db = NULL){
+    public function __construct($prefix ='',$db = NULL){
 		if($db == NULL){
 			global $wpdb;
 			$this->senpai_db = $wpdb;
-			$this->senpai_prefix = $wpdb->prefix . $prefix . '_';
+			if($prefix){
+				$this->senpai_prefix = $wpdb->prefix . $prefix . '_';
+			}	
 			$this->senpai_remote = false;
 		}else{
 			$remote_db = new wpdb($db->username,$db->password,$db->database_name,$db->host);
@@ -42,7 +60,12 @@ class DB {
     }
 
 	/**
+	 * get all rows
+	 * 
+	 * ```
 	 * $data = $senpai_db->get_all(table_name);
+	 * ```
+	 * 
 	 * @param string $table_name
 	 * @return array 
 	 */
@@ -52,7 +75,12 @@ class DB {
 	}
 
 	/**
+	 * Get single value
+	 * 
+	 * ```
 	 * $val = $senpai_db->get_val(senpai_table,senpai_col, id);
+	 * ```
+	 * 
 	 * @param string $table_name
 	 * @param string $column_name
 	 * @param string $id
@@ -64,7 +92,12 @@ class DB {
 	}
 
 	/**
+	 * get single Row
+	 * 
+	 * ```
 	 * $row = $senpai_db->get_row(senpai_table, id);
+	 * ```
+	 * 
 	 * @param string $table_name
 	 * @param string $id
 	 * @return array
@@ -75,7 +108,12 @@ class DB {
 	}
 
 	/**
+	 * Get Single colum
+	 * 
+	 * ```
 	 * $column = $senpai_db->get_col(senpai_table, column_name);
+	 * ```
+	 * 
 	 * @param string $table_name
 	 * @param string $column_name
 	 * @return array
@@ -86,7 +124,12 @@ class DB {
 	}
 
 	/**
+	 * Get last inserted ID
+	 * 
+	 * ```
 	 * $last_id = $senpai_db->insert(table_name, data);
+	 * ```
+	 * 
 	 * @param string $table_name
 	 * @param array $data
 	 * @return int
@@ -98,7 +141,12 @@ class DB {
 	}
 
 	/**
+	 * Update values by Row ID
+	 * 
+	 * ```
 	 * $senpai_db->update(table_name, data, id);
+	 * ```
+	 * 
 	 * @param string $table_name
 	 * @param array $data
 	 * @param array $id
@@ -110,7 +158,12 @@ class DB {
 	}
 
 	/**
+	 * Delete Row by Cell condition
+	 * 
+	 * ```
 	 * $senpai_db->delete(table_name, target_column, value);
+	 * ```
+	 * 
 	 * @param string $table_name
 	 * @param string $target_column
 	 * @param string $value
@@ -122,7 +175,12 @@ class DB {
 	}
 
 	/**
+	 * Remove all rows
+	 * 
+	 * ```
 	 * $senpai_db->reset(table_name);
+	 * ```
+	 * 
 	 * @param string $table_name
 	 * @return void
 	 */

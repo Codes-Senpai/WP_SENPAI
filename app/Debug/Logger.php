@@ -3,12 +3,15 @@ namespace WP_SENPAI\Debug;
 
 if ( !defined( 'WPINC' ) ) {die();}
     /**
-	 * Logger Class it's used to Log Stuff that can be accesible through dashboard
+	 * Logger helper Class to Log Stuff that can be accessible through dashboard
 	 * 
-	 * 
-	 * 
-	 * @todo add clear functionality
-	 * @todo add admin widget
+	 * ```
+	 * $logger = new \WP_SENPAI\Debug\Logger();
+	 * $logger->show_admin();
+	 * $logger->log('test');
+	 * $logger->destroy();
+	 * ```
+	 *
 	 * @category Class
 	 * @author amine safsafi
 	 */
@@ -19,9 +22,13 @@ class Logger {
     var $senpai_base;
 
 	/**
+	 * Initiate new logger
+	 * 
+	 * ```
 	 * $logger = new \WP_SENPAI\Debug\Logger();
-	 * for the $base variable only URL valid characters allowed
-	 * @param string $base
+	 * ```
+	 * 
+	 * @param string $base only URL valid characters allowed
 	 * @author amine safsafi
 	 * @return void
 	 */
@@ -40,7 +47,11 @@ class Logger {
 
 	/**
 	 * Display logs under tools page
+	 * 
+	 * ```
 	 * $logger->show_admin();
+	 * ```
+	 * 
 	 * @author amine safsafi
 	 * @return void
 	 */
@@ -48,8 +59,12 @@ class Logger {
 		add_action( 'admin_menu', [ $this, 'add_logs_menu' ] );
 	}
 	/**
-	 * Append variable to log file
+	 * Log variable or string
+	 * 
+	 * ```
 	 * $logger->log('test');
+	 * ```
+	 * 
 	 * @param mixed $log_msg
 	 * @author amine safsafi
 	 * @return void
@@ -67,8 +82,12 @@ class Logger {
 	}
 
 	/**
-	 * Remove Log folder and files within
+	 * Remove Log folder and and all files
+	 * 
+	 * ```
 	 * $logger->destroy();
+	 * ```
+	 * 
 	 * @author amine safsafi
 	 * @return int
 	 */

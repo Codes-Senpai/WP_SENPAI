@@ -3,7 +3,18 @@ namespace WP_SENPAI\Utils;
 
 if ( !defined( 'WPINC' ) ) {die();}
     /**
-	 * JSON helper class its used to speedup interact with WordPress default options.
+	 * JSON helper class to speedup interact with WordPress default options.
+	 * 
+	 * ```
+	 * $senpai_option = \WP_SENPAI\Utils\JSON('senpai_option');
+	 * $senpai_option->set('site_title','SENPAI WEBSITE');
+	 * $senpai_option->save();
+	 * $local_var = $senpai_option->get('site_title');
+	 * $local_arr = $senpai_option->get_all();
+	 * $senpai_option->remove('site_title');
+	 * $senpai_option->reset();
+	 * ```
+	 * 
 	 * @category Class
 	 * @author amine safsafi
 	 */
@@ -23,7 +34,12 @@ class JSON {
     
     
 	/**
+	 * Initiate new JSON
+	 * 
+	 * ```
 	 * $senpai_option = \WP_SENPAI\Utils\JSON('senpai_option');
+	 * ```
+	 * 
 	 * @param string $option_name
 	 * @param boolean $is_site_options
 	 * @author amine safsafi
@@ -51,7 +67,12 @@ class JSON {
 		}
 	}
 	/**
+	 * Remore single option by name
+	 * 
+	 * ```
 	 * $senpai_option->remove('site_title');
+	 * ```
+	 * 
 	 * @param string $key
 	 * @return boolean
 	 */
@@ -71,7 +92,12 @@ class JSON {
     }
 
 	/**
+	 * Get single option
+	 * 
+	 * ```
 	 * $local_var = $senpai_option->get('site_title');
+	 * ```
+	 * 
 	 * @param string $key 
 	 * @return string
 	 * @author amine safsafi
@@ -91,9 +117,13 @@ class JSON {
     }
 		
 	/**
-	 * $local_arr = $senpai_option->get_all();
-	 * @return array
+	 * get all options
 	 * 
+	 * ```
+	 * $local_arr = $senpai_option->get_all();
+	 * ```
+	 * 
+	 * @return array
 	 * @author amine safsafi
 	 */	
     public function get_all(){
@@ -107,7 +137,12 @@ class JSON {
 	}
  
 	/**
+	 * Set Option
+	 * 
+	 * ```
 	 * $senpai_option->set('site_title','SENPAI WEBSITE');
+	 * ```
+	 * 
 	 * @param string $key required
 	 * @param string $value
 	 * @author amine safsafi
@@ -137,7 +172,11 @@ class JSON {
  
 	/**
 	 * run after insert/update options value to save into DB
+	 * 
+	 * ```
 	 * $senpai_option->save();
+	 * ```
+	 * 
 	 * @return void
 	 * @author amine safsafi
 	 */
@@ -149,7 +188,12 @@ class JSON {
 		}
     }
     /**
+	 * Reset all values
+	 * 
+	 * ```
 	 * $senpai_option->reset();
+	 * ```
+	 * 
 	 * @author amine safsafi
 	 * @return void
 	 */

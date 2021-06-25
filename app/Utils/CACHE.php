@@ -5,6 +5,10 @@ if ( !defined( 'WPINC' ) ) {die();}
     /**
 	 * Cache helper class it's used to speedup interact with WordPress DB Cache.
 	 * 
+	 * ```
+	 * $cache = new \WP_SENPAI\Utils\CACHE('test');
+	 * $cache->set('cheer',array('hello','bye'));
+	 * ```
 	 * 
 	 * @see https://developer.wordpress.org/reference/functions/wp_cache_get/
 	 * @see https://developer.wordpress.org/reference/functions/wp_cache_set/
