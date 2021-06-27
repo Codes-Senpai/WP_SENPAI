@@ -11,6 +11,7 @@ if ( !defined( 'WPINC' ) ) {die();}
 	 * 
 	 * @category Class
 	 * @author amine safsafi
+     * @todo Add Sanitize and more restriction to complex data.
 	 */
 class MD {
    
@@ -52,7 +53,7 @@ class MD {
 	 * @param string $meta_key
 	 * @param mixed $meta_value
 	 * @author amine safsafi
-	 * @return void
+	 * @return (int|false) Meta ID on success, false on failure.
 	 */
     public static function set_metadata($post_id, $meta_key, $meta_value = ''){
         return add_post_meta( $post_id, $this->senpai_prefix . $meta_key, $meta_value, true);
@@ -72,7 +73,7 @@ class MD {
 	 * @param string $meta_key
 	 * @param mixed $meta_value
 	 * @author amine safsafi
-	 * @return void
+	 * @return (mixed) An array if $single is false. The value of the meta field if $single is true. False for an invalid $post_id.
 	 */
     public static function get_metadata($post_id,$meta_key){
         return get_post_meta($post_id, $this->senpai_prefix . $meta_key, true);
@@ -92,7 +93,7 @@ class MD {
 	 * @param string $meta_key
 	 * @param mixed $meta_value
 	 * @author amine safsafi
-	 * @return void
+	 * @return (int|bool) Meta ID if the key didn't exist, true on successful update, false on failure or if the value passed to the function is the same as the one that is already in the database.
 	 */
     public static function update_metadata($post_id, $meta_key, $meta_value=''){
         return update_post_meta($post_id, $this->senpai_prefix . $meta_key, $meta_value); 
@@ -112,7 +113,7 @@ class MD {
 	 * @param string $meta_key
 	 * @param mixed $meta_value
 	 * @author amine safsafi
-	 * @return void
+	 * @return (bool) True on success, false on failure.
 	 */
     public static function remove_metadata($post_id, $meta_key, $meta_value = ''){
         return delete_post_meta($post_id, $this->senpai_prefix . $meta_key, $meta_value);
