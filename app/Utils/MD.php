@@ -56,7 +56,12 @@ class MD {
 	 * @return (int|false) Meta ID on success, false on failure.
 	 */
     public static function set_metadata($post_id, $meta_key, $meta_value = ''){
-        return add_post_meta( $post_id, $this->senpai_prefix . $meta_key, $meta_value, true);
+        if (self::_isStatic()) {
+            return add_post_meta( $post_id, $meta_key, $meta_value, true);
+        } else {
+            return add_post_meta( $post_id, $this->senpai_prefix . $meta_key, $meta_value, true);
+        }
+        
     }
 
     /**
@@ -76,7 +81,11 @@ class MD {
 	 * @return (mixed) An array if $single is false. The value of the meta field if $single is true. False for an invalid $post_id.
 	 */
     public static function get_metadata($post_id,$meta_key){
-        return get_post_meta($post_id, $this->senpai_prefix . $meta_key, true);
+        if (self::_isStatic()) {
+            return get_post_meta($post_id, $meta_key, true);
+        } else {
+            return get_post_meta($post_id, $this->senpai_prefix . $meta_key, true);
+        }
     }
 
     /**
@@ -96,7 +105,11 @@ class MD {
 	 * @return (int|bool) Meta ID if the key didn't exist, true on successful update, false on failure or if the value passed to the function is the same as the one that is already in the database.
 	 */
     public static function update_metadata($post_id, $meta_key, $meta_value=''){
-        return update_post_meta($post_id, $this->senpai_prefix . $meta_key, $meta_value); 
+        if (self::_isStatic()) {
+            return update_post_meta($post_id, $meta_key, $meta_value);
+        } else {
+            return update_post_meta($post_id, $this->senpai_prefix . $meta_key, $meta_value);
+        } 
     }
 
     /**
@@ -116,6 +129,21 @@ class MD {
 	 * @return (bool) True on success, false on failure.
 	 */
     public static function remove_metadata($post_id, $meta_key, $meta_value = ''){
-        return delete_post_meta($post_id, $this->senpai_prefix . $meta_key, $meta_value);
+        if (self::_isStatic()) {
+            return delete_post_meta($post_id,$meta_key, $meta_value);
+        } else {
+            return delete_post_meta($post_id, $this->senpai_prefix . $meta_key, $meta_value);
+        }
+    }
+    /**
+     * @ignore
+     * This method needs to be declared static because it may be called
+     * in static context.
+    */
+    private static function _isStatic() {
+        $backtrace = debug_backtrace();
+        // The 0th call is to _isStatic(), so we need to check the next
+        // call down the stack.
+        return $backtrace[1]['type'] == '::';
     }
 }
