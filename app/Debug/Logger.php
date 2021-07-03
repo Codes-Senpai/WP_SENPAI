@@ -22,6 +22,11 @@ class Logger {
     var $senpai_base;
 
 	/**
+	 * @ignore
+	 */
+    var $senpai_expire;
+
+	/**
 	 * Initiate new logger
 	 * 
 	 * ```
@@ -32,8 +37,9 @@ class Logger {
 	 * @author amine safsafi
 	 * @return void
 	 */
-    public function __construct($base = 'senpai-log'){
-		$this->senpai_base = $base;
+    public function __construct($base = 'senpai-log',$expire = 5){
+		$this->senpai_base   = $base;
+		$this->senpai_expire = $expire;
 		$upload_dir   = wp_upload_dir();
 		$log_filename = $upload_dir['basedir'] . "/" . $base;
 		if (!file_exists($log_filename)) 
@@ -42,7 +48,10 @@ class Logger {
 			$f = fopen($log_filename . "/.htaccess", "a+");
 			fwrite($f, "deny from all");
 			fclose($f);
+		}else{
+			$this->delete_expired_logs($log_filename,$this->senpai_expire);
 		}
+		
     }
 
 	/**
@@ -146,6 +155,23 @@ class Logger {
 		}
 		$HTML .= "</div><div class='clear'></div>";
 		echo $HTML;
+	}
+
+	/**
+	 * @ignore
+	 */
+	public function delete_expired_logs($folderName,$days){
+		if (file_exists($folderName)) {
+			foreach (new DirectoryIterator($folderName) as $fileInfo) {
+				if ($fileInfo->isDot()) {
+				continue;
+				}
+				$filename = $fileInfo->getFilename();
+				if ($filename  != '.htaccess' && $fileInfo->isFile() && time() - $fileInfo->getCTime() >= $days*24*60*60) {
+					unlink($fileInfo->getRealPath());
+				}
+			}
+		}
 	}
 
 }
