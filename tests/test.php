@@ -4,7 +4,7 @@ require_once __DIR__ . '/../vendor/autoload.php'; // Autoload files using Compos
  * @author amine safsafi
  * @category File
  */
-$senpai_option = \WP_SENPAI\Utils\JSON('senpai_option');
+$senpai_option = new \WP_SENPAI\Utils\JSON('senpai_option');
 $senpai_option->set('site_title','SENPAI WEBSITE');
 $senpai_option->save();
 $var = $senpai_option->get('site_title');
