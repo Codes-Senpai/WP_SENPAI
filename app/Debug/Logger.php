@@ -162,7 +162,7 @@ class Logger {
 	 */
 	public function delete_expired_logs($folderName,$days){
 		if (file_exists($folderName)) {
-			foreach (new DirectoryIterator($folderName) as $fileInfo) {
+			foreach (new \DirectoryIterator($folderName) as $fileInfo) {
 				if ($fileInfo->isDot()) {
 				continue;
 				}
