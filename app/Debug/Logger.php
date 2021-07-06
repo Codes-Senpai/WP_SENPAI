@@ -155,7 +155,7 @@ class Logger {
 				$title = $value['title'];
 				$content = $value['content'];
 				$HTML .= "<h1 style='padding:1rem;'>$title</h1>";
-				$HTML .= "<br><div style='max-height:300px;'><pre><code class=\"language-php\">$content</code></pre></div><br>";
+				$HTML .= "<br><div><pre style='max-height:32rem;'><code class=\"language-php\">$content</code></pre></div><br>";
 			}
 		}else{
 			$HTML .= "<br><div style='padding:3rem;display:flex;align-items: center;justify-content:center;background: white;'><h1>NO Logs Available.</h1></div><br>";
