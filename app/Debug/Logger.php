@@ -27,6 +27,11 @@ class Logger {
     var $senpai_expire;
 
 	/**
+	 * @ignore
+	 */
+    var $senpai_uri_base;
+
+	/**
 	 * Initiate new logger
 	 * 
 	 * ```
@@ -51,7 +56,9 @@ class Logger {
 		}else{
 			$this->delete_expired_logs($log_filename,$this->senpai_expire);
 		}
-		
+		$this->senpai_uri_base = get_template_directory_uri() . '/vendor/senpai/wp-senpai';
+		add_action( 'admin_enqueue_scripts', array($this,'load_assets') );
+
     }
 
 	/**
@@ -148,7 +155,7 @@ class Logger {
 				$title = $value['title'];
 				$content = $value['content'];
 				$HTML .= "<h1 style='padding:1rem;'>$title</h1>";
-				$HTML .= "<br><div style='max-height:300px;overflow:scroll;background-color:white'><pre><code class=\"language-php\">$content</code></pre></div><br>";
+				$HTML .= "<br><div style='max-height:300px;'><pre><code class=\"language-php\">$content</code></pre></div><br>";
 			}
 		}else{
 			$HTML .= "<br><div style='padding:3rem;display:flex;align-items: center;justify-content:center;background: white;'><h1>NO Logs Available.</h1></div><br>";
@@ -174,4 +181,14 @@ class Logger {
 		}
 	}
 
+
+	/**
+	 * @ignore
+	 */
+	public function load_assets($screen){
+		if (strpos($screen, 'tools_page_senpai_logs_viewer') !== false) {
+			wp_enqueue_style( 'prism-css', THEME_URI . '/static/prism.css', array(), $this->version, 'all' );
+			wp_enqueue_script( 'prism-js', $this->senpai_uri_base . '/static/prism.js', array(), $this->version, true );
+		}
+	}
 }
