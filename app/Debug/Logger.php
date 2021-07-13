@@ -187,7 +187,7 @@ class Logger {
 	 */
 	public function load_assets($screen){
 		if (strpos($screen, 'tools_page_senpai_logs_viewer') !== false) {
-			wp_enqueue_style( 'prism-css', THEME_URI . '/static/prism.css', array(), NULL, 'all' );
+			wp_enqueue_style( 'prism-css', $this->senpai_uri_base . '/static/prism.css', array(), NULL, 'all' );
 			wp_enqueue_script( 'prism-js', $this->senpai_uri_base . '/static/prism.js', array(), NULL, true );
 		}
 	}
