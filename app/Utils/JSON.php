@@ -6,7 +6,7 @@ if ( !defined( 'WPINC' ) ) {die();}
 	 * JSON helper class to speedup interact with WordPress default options.
 	 * 
 	 * ```
-	 * $senpai_option = \WP_SENPAI\Utils\JSON('senpai_option');
+	 * $senpai_option = new \WP_SENPAI\Utils\JSON('senpai_option');
 	 * $senpai_option->set('site_title','SENPAI WEBSITE');
 	 * $senpai_option->save();
 	 * $local_var = $senpai_option->get('site_title');
@@ -37,7 +37,7 @@ class JSON {
 	 * Initiate new JSON
 	 * 
 	 * ```
-	 * $senpai_option = \WP_SENPAI\Utils\JSON('senpai_option');
+	 * $senpai_option = new \WP_SENPAI\Utils\JSON('senpai_option');
 	 * ```
 	 * 
 	 * @param string $option_name
