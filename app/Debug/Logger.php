@@ -54,7 +54,9 @@ class Logger {
 			fwrite($f, "deny from all");
 			fclose($f);
 		}else{
-			$this->delete_expired_logs($log_filename,$this->senpai_expire);
+			if($expire != -1){
+				$this->delete_expired_logs($log_filename,$this->senpai_expire);
+			}
 		}
 		$this->senpai_uri_base = get_template_directory_uri() . '/vendor/senpai/wp-senpai';
 		add_action( 'admin_enqueue_scripts', array($this,'load_assets') );
@@ -85,16 +87,22 @@ class Logger {
 	 * @author amine safsafi
 	 * @return void
 	 */
-	public function log($log_msg)
+	public function log($log_msg, $hint = "NA")
 	{
 		$upload_dir   = wp_upload_dir();
 		$log_filename = $upload_dir['basedir'] . "/" . $this->senpai_base;	
-		$log_file_data = $log_filename.'/log_' . date('d-M-Y') . '.log';
+		$log_file_data = $log_filename.'/log_' . date('d-M-Y') . '.csv';
 		$now = current_time( 'mysql' );
-		$seperator = '---------[ ' . $now . ' ]---------';
-		file_put_contents($log_file_data, $seperator . "\n", FILE_APPEND);
-		// if you don't add `FILE_APPEND`, the file will be erased each time you add a log
-		file_put_contents($log_file_data, print_r($log_msg,1) . "\n", FILE_APPEND);
+		if(file_exists($log_file_data)){
+			$row = "$now,$log_msg,$hint";
+			file_put_contents($log_file_data, $row . "\n", FILE_APPEND);
+		}else{
+			$header= "Time, Message, Hint";
+			$row = "$now,$log_msg,$hint";
+			file_put_contents($log_file_data, $header . "\n", FILE_APPEND);
+			file_put_contents($log_file_data, $row . "\n", FILE_APPEND);
+		}
+
 	}
 
 	/**
@@ -141,7 +149,8 @@ class Logger {
 					$full_path = $log_filename . "/" .$file;
 					$item = array();
 					$item['title'] = $file;
-					$item['content'] = nl2br(file_get_contents( $full_path ));
+					
+					$item['content'] = $this->csv_table_html($full_path);
 					array_push($logs_contents,$item);
 				}
 			}
@@ -155,13 +164,31 @@ class Logger {
 				$title = $value['title'];
 				$content = $value['content'];
 				$HTML .= "<h1 style='padding:1rem;'>$title</h1>";
-				$HTML .= "<br><div><pre style='max-height:32rem;'><code class=\"language-php\">$content</code></pre></div><br>";
+				$HTML .= "<br><div>$content</div><br>";
 			}
 		}else{
 			$HTML .= "<br><div style='padding:3rem;display:flex;align-items: center;justify-content:center;background: white;'><h1>NO Logs Available.</h1></div><br>";
 		}
 		$HTML .= "</div><div class='clear'></div>";
 		echo $HTML;
+	}
+
+	/**
+	 * @ignore
+	 */
+	public function csv_table_html($full_path){
+		$file = fopen( $full_path, "r" );
+		$html = "<table data-table-theme=\"dark zebra\">\n\n";
+		while (($line = fgetcsv($file)) !== false) {
+			$html .= "<tr>";
+			foreach ($line as $cell) {
+				$html .= "<td>" . htmlspecialchars($cell) . "</td>";
+			}
+			$html .= "</tr>\n";
+		}
+		fclose($file);
+		$html .= "</table>";
+		return $html;
 	}
 
 	/**
@@ -187,8 +214,9 @@ class Logger {
 	 */
 	public function load_assets($screen){
 		if (strpos($screen, 'tools_page_senpai_logs_viewer') !== false) {
-			wp_enqueue_style( 'prism-css', $this->senpai_uri_base . '/static/prism.css', array(), NULL, 'all' );
-			wp_enqueue_script( 'prism-js', $this->senpai_uri_base . '/static/prism.js', array(), NULL, true );
+			wp_enqueue_style( 'debug-table-css', $this->senpai_uri_base . '/static/table.css', array(), NULL, 'all' );
+			//wp_enqueue_style( 'prism-css', $this->senpai_uri_base . '/static/prism.css', array(), NULL, 'all' );
+			//wp_enqueue_script( 'prism-js', $this->senpai_uri_base . '/static/prism.js', array(), NULL, true );
 		}
 	}
 }
