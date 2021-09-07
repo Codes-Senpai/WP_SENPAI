@@ -1,5 +1,6 @@
 <?php
 namespace WP_SENPAI\Debug;
+use \diversen\sendfile;
 
 if ( !defined( 'WPINC' ) ) {die();}
     /**
@@ -32,6 +33,11 @@ class Logger {
     var $senpai_uri_base;
 
 	/**
+	 * @ignore
+	 */
+    var $senpai_token;
+
+	/**
 	 * Initiate new logger
 	 * 
 	 * ```
@@ -45,6 +51,7 @@ class Logger {
     public function __construct($base = 'senpai-log',$expire = 5){
 		$this->senpai_base   = $base;
 		$this->senpai_expire = $expire;
+		$this->senpai_token = wp_create_nonce('senpai-token');
 		$upload_dir   = wp_upload_dir();
 		$log_filename = $upload_dir['basedir'] . "/" . $base;
 		if (!file_exists($log_filename)) 
@@ -59,7 +66,7 @@ class Logger {
 			}
 		}
 		$this->senpai_uri_base = get_template_directory_uri() . '/vendor/senpai/wp-senpai';
-		add_action( 'admin_enqueue_scripts', array($this,'load_assets') );
+		
 
     }
 
@@ -74,7 +81,9 @@ class Logger {
 	 * @return void
 	 */
 	public function show_admin(){
-		add_action( 'admin_menu', [ $this, 'add_logs_menu' ] );
+		add_action( 'admin_menu', array($this, 'add_logs_menu') );
+		add_action( 'admin_enqueue_scripts', array($this,'load_assets') );
+		add_action( 'init', array($this,'senpai_logs_downloading_handler') );
 	}
 	/**
 	 * Log variable or string
@@ -89,16 +98,18 @@ class Logger {
 	 */
 	public function log($log_msg, $hint = "NA")
 	{
+		$msg_ready = print_r($log_msg,1);
+		$msg_ready = str_replace(array("\n","\r"), '', $msg_ready);
 		$upload_dir   = wp_upload_dir();
 		$log_filename = $upload_dir['basedir'] . "/" . $this->senpai_base;	
 		$log_file_data = $log_filename.'/log_' . date('d-M-Y') . '.csv';
 		$now = current_time( 'mysql' );
 		if(file_exists($log_file_data)){
-			$row = "$now,$log_msg,$hint";
+			$row = "$now,$msg_ready,$hint";
 			file_put_contents($log_file_data, $row . "\n", FILE_APPEND);
 		}else{
 			$header= "Time, Message, Hint";
-			$row = "$now,$log_msg,$hint";
+			$row = "$now,$msg_ready,$hint";
 			file_put_contents($log_file_data, $header . "\n", FILE_APPEND);
 			file_put_contents($log_file_data, $row . "\n", FILE_APPEND);
 		}
@@ -158,12 +169,19 @@ class Logger {
 		$now = current_time( 'mysql' );
 		$page_folder = $this->senpai_base;
 		$HTML = "<div class='wrap'>";
-		$HTML .= "<div style='padding:1rem;display:flex;align-items: center;justify-content:space-between;background: white;'><h1>$page_folder</h1><h1>server-time: $now</h1></div>";
+		$HTML .= "<div style='padding:1rem;display:flex;align-items: center;justify-content:space-between;background: white;'>
+		<h1>Logger: $page_folder</h1>
+		<h1>Expire: $this->senpai_expire Days</h1>
+		<h1>Server Time: $now</h1>
+		</div>";
+		$site_base = get_site_url() . '/';
 		if(count($logs_contents)){
 			foreach ($logs_contents as $key => $value){
 				$title = $value['title'];
 				$content = $value['content'];
 				$HTML .= "<h1 style='padding:1rem;'>$title</h1>";
+				$link =  $site_base . '?log_token='.$this->senpai_token.'&log_file_name=' . $title;
+				$HTML .= "<a  style='margin:0 0 1rem 1rem;' href='$link' target='_blank' class='button'>Download</a>";
 				$HTML .= "<br><div>$content</div><br>";
 			}
 		}else{
@@ -215,8 +233,39 @@ class Logger {
 	public function load_assets($screen){
 		if (strpos($screen, 'tools_page_senpai_logs_viewer') !== false) {
 			wp_enqueue_style( 'debug-table-css', $this->senpai_uri_base . '/static/table.css', array(), NULL, 'all' );
+/* 			wp_register_script( 'senpai_logs_download_handler', $this->senpai_uri_base . '/static/logs.js', array('jquery') );
+			wp_localize_script( 'senpai_logs_download_handler', 'senpai_logs_download_handler', array(
+				'ajaxurl' => site_url() . '/wp-admin/admin-ajax.php',
+				'nonce' => wp_create_nonce('senpai-logs-nonce'),
+			) );
+			wp_enqueue_script( 'senpai_logs_download_handler' );  */
 			//wp_enqueue_style( 'prism-css', $this->senpai_uri_base . '/static/prism.css', array(), NULL, 'all' );
 			//wp_enqueue_script( 'prism-js', $this->senpai_uri_base . '/static/prism.js', array(), NULL, true );
+		}
+	}
+
+	/**
+	 * @ignore
+	 */
+	public function senpai_logs_downloading_handler(){
+		if(isset($_GET['log_token'])){
+			if(isset($_GET['log_token']) && isset($_GET['log_file_name'])){
+				if ( ! wp_verify_nonce( $_GET['log_token'], 'senpai-token' ) ){
+					die ();
+				}
+				$upload_dir   = wp_upload_dir();
+				$log_filename = $upload_dir['basedir'] . "/" . $this->senpai_base;	
+				$file = $log_filename.'/' . $_GET['log_file_name'] . '.csv';
+				$s = new sendfile();
+				try {
+					$s->send($file);
+				} catch (\Exception $e) {
+					echo $e->getMessage();
+				}
+				die();
+			}else{
+				wp_die(404); // not legit
+			}
 		}
 	}
 }

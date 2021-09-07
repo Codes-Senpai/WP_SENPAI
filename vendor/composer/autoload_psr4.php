@@ -6,5 +6,6 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'diversen\\' => array($vendorDir . '/diversen/http-send-file'),
     'WP_SENPAI\\' => array($baseDir . '/app'),
 );
