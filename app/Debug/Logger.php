@@ -1,6 +1,5 @@
 <?php
 namespace WP_SENPAI\Debug;
-use \diversen\sendfile;
 
 if ( !defined( 'WPINC' ) ) {die();}
     /**
@@ -182,7 +181,7 @@ class Logger {
 				$HTML .= "<h1 style='padding:1rem;'>$title</h1>";
 				$link =  $site_base . '?log_token='.$this->senpai_token.'&log_file_name=' . $title;
 				$HTML .= "<a  style='margin:0 0 1rem 1rem;' href='$link' target='_blank' class='button'>Download</a>";
-				$HTML .= "<br><div>$content</div><br>";
+				$HTML .= "<br><div class='table-container'>$content</div><br>";
 			}
 		}else{
 			$HTML .= "<br><div style='padding:3rem;display:flex;align-items: center;justify-content:center;background: white;'><h1>NO Logs Available.</h1></div><br>";
@@ -250,13 +249,12 @@ class Logger {
 	public function senpai_logs_downloading_handler(){
 		if(isset($_GET['log_token'])){
 			if(isset($_GET['log_token']) && isset($_GET['log_file_name'])){
-				if ( ! wp_verify_nonce( $_GET['log_token'], 'senpai-token' ) ){
-					die ();
-				}
+				if ( ! wp_verify_nonce( $_GET['log_token'], 'senpai-token' ) ){ die (); }
 				$upload_dir   = wp_upload_dir();
 				$log_filename = $upload_dir['basedir'] . "/" . $this->senpai_base;	
-				$file = $log_filename.'/' . $_GET['log_file_name'] . '.csv';
-				$s = new sendfile();
+				$file = $log_filename.'/' . $_GET['log_file_name'];
+				if(!file_exists($file)){ die (); }
+				$s = new \diversen\sendfile();
 				try {
 					$s->send($file);
 				} catch (\Exception $e) {

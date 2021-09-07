@@ -1,3 +1,9 @@
+
+.table-container{
+  max-height: 250px;
+  overflow-y: scroll;
+}
+
 /* Center tables for demo */
 table {
     width: 100%;
