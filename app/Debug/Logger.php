@@ -99,16 +99,18 @@ class Logger {
 	{
 		$msg_ready = print_r($log_msg,1);
 		$msg_ready = str_replace(array("\n","\r"), '', $msg_ready);
+		$msg_ready = preg_replace('/\s+/', ' ', $msg_ready);
+		$type = gettype($log_msg);
 		$upload_dir   = wp_upload_dir();
 		$log_filename = $upload_dir['basedir'] . "/" . $this->senpai_base;	
-		$log_file_data = $log_filename.'/log_' . date('d-M-Y') . '.csv';
+		$log_file_data = $log_filename.'/log_' . date('Y-m-d') . '.csv';
 		$now = current_time( 'mysql' );
 		if(file_exists($log_file_data)){
-			$row = "$now,$msg_ready,$hint";
+			$row = "$now,$msg_ready,$type,$hint";
 			file_put_contents($log_file_data, $row . "\n", FILE_APPEND);
 		}else{
-			$header= "Time, Message, Hint";
-			$row = "$now,$msg_ready,$hint";
+			$header= "Time, Log, Type, Hint";
+			$row = "$now,$msg_ready,$type,$hint";
 			file_put_contents($log_file_data, $header . "\n", FILE_APPEND);
 			file_put_contents($log_file_data, $row . "\n", FILE_APPEND);
 		}
@@ -232,12 +234,6 @@ class Logger {
 	public function load_assets($screen){
 		if (strpos($screen, 'tools_page_senpai_logs_viewer') !== false) {
 			wp_enqueue_style( 'debug-table-css', $this->senpai_uri_base . '/static/table.css', array(), NULL, 'all' );
-/* 			wp_register_script( 'senpai_logs_download_handler', $this->senpai_uri_base . '/static/logs.js', array('jquery') );
-			wp_localize_script( 'senpai_logs_download_handler', 'senpai_logs_download_handler', array(
-				'ajaxurl' => site_url() . '/wp-admin/admin-ajax.php',
-				'nonce' => wp_create_nonce('senpai-logs-nonce'),
-			) );
-			wp_enqueue_script( 'senpai_logs_download_handler' );  */
 			//wp_enqueue_style( 'prism-css', $this->senpai_uri_base . '/static/prism.css', array(), NULL, 'all' );
 			//wp_enqueue_script( 'prism-js', $this->senpai_uri_base . '/static/prism.js', array(), NULL, true );
 		}
