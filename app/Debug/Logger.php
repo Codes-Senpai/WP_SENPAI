@@ -100,6 +100,7 @@ class Logger {
 		$msg_ready = print_r($log_msg,1);
 		$msg_ready = str_replace(array("\n","\r"), '', $msg_ready);
 		$msg_ready = preg_replace('/\s+/', ' ', $msg_ready);
+		$msg_ready = str_replace(',',';',$msg_ready);
 		$type = gettype($log_msg);
 		$upload_dir   = wp_upload_dir();
 		$log_filename = $upload_dir['basedir'] . "/" . $this->senpai_base;	
