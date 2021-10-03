@@ -77,38 +77,46 @@ class DB {
 	/**
 	 * Get single value
 	 * 
+	 * The following placeholders can be used in the type string: %d(integer) %f(float) %s(string)
+	 * 
 	 * ```
-	 * $val = $senpai_db->get_val(senpai_table,senpai_col, id);
+	 * $val = $senpai_db->get_val(senpai_table,senpai_col, 'id', 1, '%d');
 	 * ```
 	 * 
 	 * @param string $table_name
 	 * @param string $column_name
-	 * @param string $id
+	 * @param string $target
+	 * @param string $value
+	 * @param string $type
 	 * @return string
 	 */
-    public function get_val($table_name,$column_name,$id){
+    public function get_val($table_name,$column_name,$target,$value, $type = "%s"){
 		$table = $this->senpai_prefix . $table_name;
-		return $this->senpai_db->get_var( $this->senpai_db->prepare("SELECT `$column_name` FROM `$table` WHERE id='%d'",$id));
+		return $this->senpai_db->get_var( $this->senpai_db->prepare("SELECT {$column_name} FROM `$table` WHERE $target='$type'",$value));
 	}
 
 	/**
 	 * get single Row
 	 * 
+	 * The following placeholders can be used in the type string: %d(integer) %f(float) %s(string)
 	 * ```
-	 * $row = $senpai_db->get_row(senpai_table, id);
+	 * $row = $senpai_db->get_row(senpai_table, 'id', 1, '%d');
 	 * ```
 	 * 
 	 * @param string $table_name
-	 * @param string $id
+	 * @param string $target
+	 * @param string $value
+	 * @param string $type
 	 * @return array
 	 */
-    public function get_row($table_name,$id){
+    public function get_row($table_name,$target,$value, $type = "%s"){
 		$table = $this->senpai_prefix . $table_name;
-		return $this->senpai_db->get_row( "SELECT * FROM $table WHERE id='$id'" );
+		return $this->senpai_db->get_row( $this->senpai_db->prepare("SELECT * FROM {$table} WHERE $target='$type'",$value));
 	}
 
 	/**
 	 * Get Single colum
+	 * 
 	 * 
 	 * ```
 	 * $column = $senpai_db->get_col(senpai_table, column_name);
@@ -120,7 +128,7 @@ class DB {
 	 */
     public function get_col($table_name,$column_name){
 		$table = $this->senpai_prefix . $table_name;
-		return $this->senpai_db->get_col( "SELECT $column_name FROM $table" );
+		return $this->senpai_db->get_col( $this->senpai_db->prepare("SELECT %s FROM $s",$column_name,$table) );
 	}
 
 	/**
