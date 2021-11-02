@@ -8,8 +8,8 @@ if ( !defined( 'WPINC' ) ) {die();}
 	 * ```
 	 * $remote_db = (object)['username'=>'','password'=>'','database_name'=>'','host'=>''];
 	 * $senpai_db = new \WP_SENPAI\Utils\DB('senpai');
-	 * $val = $senpai_db->get_val('senpai_table','senpai_col', id);
-	 * $row = $senpai_db->get_row('senpai_table', id);
+	 * $val = $senpai_db->get_val('senpai_table','senpai_col', 'id', 1, '%d');
+	 * $row = $senpai_db->get_row(senpai_table, 'id', 1, '%d');
 	 * $column = $senpai_db->get_col('senpai_table', 'column_name');
 	 * ```
 	 * 
