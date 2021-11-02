@@ -157,12 +157,13 @@ class DB {
 	 * 
 	 * @param string $table_name
 	 * @param array $data
-	 * @param array $id
+	 * @param string $target
+	 * @param mixed $value
 	 * @return void
 	 */
-    public function update($table_name,$data,$id){
+    public function update($table_name,$data,$target,$value){
 		$table = $this->senpai_prefix . $table_name;
-		$this->senpai_db->update( $table, $data, array( 'id' => $id ));
+		$this->senpai_db->update( $table, $data, array( $target => $value ));
 	}
 
 	/**
