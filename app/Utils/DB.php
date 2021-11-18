@@ -163,7 +163,7 @@ class DB {
 	 */
     public function update($table_name,$data,$target,$value){
 		$table = $this->senpai_prefix . $table_name;
-		$this->senpai_db->update( $table, $data, array( $target => $value ));
+		return $this->senpai_db->update( $table, $data, array( $target => $value ));
 	}
 
 	/**
