@@ -74,6 +74,28 @@ class DB {
 		return $this->senpai_db->get_results( "SELECT * FROM $table" );
 	}
 
+
+
+	/**
+	 * get results
+	 * 
+	 * The following placeholders can be used in the type string: %d(integer) %f(float) %s(string)
+	 * 
+	 * ```
+	 * $results = $senpai_db->results(senpai_table, 'id', 1, '%d');
+	 * ```
+	 * 
+	 * @param string $table_name
+	 * @param string $target
+	 * @param string $value
+	 * @param string $type
+	 * @return array 
+	 */
+    public function get_results($table_name, $target, $value, $type = "%s"){
+		$table = $this->senpai_prefix . $table_name;
+		return $this->senpai_db->get_results( $this->senpai_db->prepare("SELECT * FROM `$table` WHERE $target='$type'",$value));
+	}
+
 	/**
 	 * Get single value
 	 * 
