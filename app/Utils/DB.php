@@ -74,7 +74,25 @@ class DB {
 		return $this->senpai_db->get_results( "SELECT * FROM $table" );
 	}
 
-
+	/**
+	 * get count
+	 * 
+	 * The following placeholders can be used in the type string: %d(integer) %f(float) %s(string)
+	 * 
+	 * ```
+	 * $count = $senpai_db->count(senpai_table, 'status', 1, '%d');
+	 * ```
+	 * 
+	 * @param string $table_name
+	 * @param string $target
+	 * @param string $value
+	 * @param string $type
+	 * @return array 
+	 */
+    public function count($table_name, $target, $value, $type = "%s"){
+		$table = $this->senpai_prefix . $table_name;
+		return $this->senpai_db->get_var($this->senpai_db->prepare("SELECT COUNT(*) FROM (SELECT * FROM `$table` WHERE $target='$type') AS a", $value));
+	}
 
 	/**
 	 * get results
