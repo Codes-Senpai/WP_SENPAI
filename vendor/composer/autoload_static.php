@@ -7,10 +7,6 @@ namespace Composer\Autoload;
 class ComposerStaticInitfad78fead8a6536ead991505003d056e
 {
     public static $prefixLengthsPsr4 = array (
-        'd' => 
-        array (
-            'diversen\\' => 9,
-        ),
         'W' => 
         array (
             'WP_SENPAI\\' => 10,
@@ -18,10 +14,6 @@ class ComposerStaticInitfad78fead8a6536ead991505003d056e
     );
 
     public static $prefixDirsPsr4 = array (
-        'diversen\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/diversen/http-send-file',
-        ),
         'WP_SENPAI\\' => 
         array (
             0 => __DIR__ . '/../..' . '/app',

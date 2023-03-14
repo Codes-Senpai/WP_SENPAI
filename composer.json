@@ -8,8 +8,7 @@
         }
     ],
     "require": {
-        "php": ">=7.0.0",
-        "diversen/http-send-file": "^2.0"
+        "php": ">=7.0.0"
     },
     "autoload": {
         "psr-4": {
